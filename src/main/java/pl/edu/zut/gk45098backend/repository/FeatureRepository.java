@@ -6,9 +6,4 @@ import pl.edu.zut.gk45098backend.model.Feature;
 import java.util.List;
 
 public interface FeatureRepository extends CrudRepository<Feature, Long> {
-
-    List<Feature> findAll();
-
-    Feature findById(long id);
-
 }
