@@ -2,37 +2,34 @@ package pl.edu.zut.gk45098backend.model;
 
 import javax.persistence.*;
 
-import com.bedatadriven.jackson.datatype.jts.serialization.GeometryDeserializer;
-import com.bedatadriven.jackson.datatype.jts.serialization.GeometrySerializer;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.vividsolutions.jts.geom.Geometry;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.vladmihalcea.hibernate.type.json.JsonType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.locationtech.jts.geom.Geometry;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
+@TypeDef(name = "json", typeClass = JsonType.class)
 public class Feature {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @JsonSerialize(using = GeometrySerializer.class)
-    @JsonDeserialize(using = GeometryDeserializer.class)
+    @Column(columnDefinition = "Geometry")
     private Geometry geometry;
 
-    @OneToMany(mappedBy = "feature", cascade = CascadeType.ALL)
-    private List<Property> properties;
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    private Map<String, Object> properties;
 
-    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "layer_id", nullable = false)
     private Layer layer;
 
     public Feature() {
-        this.properties = new ArrayList<Property>();
+        this.properties = new HashMap<String, Object>();
     }
 
     public Long getId() {
@@ -51,16 +48,12 @@ public class Feature {
         this.geometry = geometry;
     }
 
-    public List<Property> getProperties() {
+    public Map<String, Object> getProperties() {
         return properties;
     }
 
-    public void addProperty(Property property){
-        this.properties.add(property);
-    }
-
-    public void  removeProperty(Feature feature){
-        this.properties.remove(feature);
+    public void setProperties(Map<String, Object> properties) {
+        this.properties = properties;
     }
 
     public Layer getLayer() {

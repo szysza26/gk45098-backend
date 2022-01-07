@@ -1,8 +1,8 @@
 package pl.edu.zut.gk45098backend.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Layer {
@@ -14,10 +14,10 @@ public class Layer {
     private String name;
 
     @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL)
-    private List<Feature> features;
+    private Set<Feature> features;
 
     public Layer() {
-        this.features = new ArrayList<Feature>();
+        this.features = new HashSet<Feature>();
     }
 
     public Long getId() {
@@ -36,7 +36,7 @@ public class Layer {
         this.name = name;
     }
 
-    public List<Feature> getFeatures() {
+    public Set<Feature> getFeatures() {
         return features;
     }
 
