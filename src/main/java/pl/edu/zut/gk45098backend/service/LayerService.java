@@ -6,7 +6,7 @@ import pl.edu.zut.gk45098backend.dto.LayerDTO;
 import pl.edu.zut.gk45098backend.model.Feature;
 import pl.edu.zut.gk45098backend.model.Layer;
 import pl.edu.zut.gk45098backend.repository.LayerRepository;
-
+import java.util.Set;
 
 @Service
 public class LayerService {
@@ -23,13 +23,21 @@ public class LayerService {
         Layer layer = new Layer();
         layer.setName(layerDTO.getName());
 
-        for(org.wololo.geojson.Feature geojsonFeature : layerDTO.getFeatures()){
-            Feature feature = this.geojsonTransformer.transformGeojsonFeatureToEntity(geojsonFeature);
+        Set<Feature> features = geojsonTransformer.transformFromGeojsonFeatureCollection(layerDTO.getData());
+        for(Feature feature : features){
             feature.setLayer(layer);
             layer.addFeature(feature);
         }
 
         layerRepository.save(layer);
+    }
+
+    public LayerDTO getLayerByName(String name) {
+        Layer layer = this.layerRepository.findFirstByName(name);
+        LayerDTO layerDTO = new LayerDTO();
+        layerDTO.setName(layer.getName());
+        layerDTO.setData(this.geojsonTransformer.transformToGeojsonFeatureCollection(layer.getFeatures()));
+        return  layerDTO;
     }
 
 }

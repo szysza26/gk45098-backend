@@ -1,16 +1,14 @@
 package pl.edu.zut.gk45098backend.dto;
 
 import org.springframework.stereotype.Component;
-import org.wololo.geojson.Feature;
-
-import java.util.Set;
+import org.wololo.geojson.FeatureCollection;
 
 @Component
 public class LayerDTO {
 
     private String name;
 
-    private Set<Feature> features;
+    private FeatureCollection data;
 
     public String getName() {
         return name;
@@ -20,11 +18,11 @@ public class LayerDTO {
         this.name = name;
     }
 
-    public Set<Feature> getFeatures() {
-        return features;
+    public FeatureCollection getData() {
+        return data;
     }
 
-    public void setFeatures(Set<Feature> features) {
-        this.features = features;
+    public void setData(FeatureCollection data) {
+        this.data = data;
     }
 }
