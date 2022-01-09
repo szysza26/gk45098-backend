@@ -1,7 +1,6 @@
 package pl.edu.zut.gk45098backend.model;
 
 import javax.persistence.*;
-
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -16,15 +15,12 @@ public class Feature {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-
     @Column(columnDefinition = "Geometry")
     private Geometry geometry;
-
     @Type(type = "json")
     @Column(columnDefinition = "json")
     private Map<String, Object> properties;
-
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "layer_id", nullable = false)
     private Layer layer;
 

@@ -22,6 +22,7 @@ public class LayerService {
     public void addLayer(LayerDTO layerDTO) {
         Layer layer = new Layer();
         layer.setName(layerDTO.getName());
+        layer.setType(layerDTO.getType());
 
         Set<Feature> features = geojsonTransformer.transformFromGeojsonFeatureCollection(layerDTO.getData());
         for(Feature feature : features){
@@ -36,6 +37,7 @@ public class LayerService {
         Layer layer = this.layerRepository.findFirstByName(name);
         LayerDTO layerDTO = new LayerDTO();
         layerDTO.setName(layer.getName());
+        layerDTO.setType(layer.getType());
         layerDTO.setData(this.geojsonTransformer.transformToGeojsonFeatureCollection(layer.getFeatures()));
         return  layerDTO;
     }
