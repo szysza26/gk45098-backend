@@ -1,45 +1,60 @@
 package pl.edu.zut.gk45098backend.service;
 
 import org.springframework.stereotype.Service;
-import pl.edu.zut.gk45098backend.dto.GeojsonTransformer;
-import pl.edu.zut.gk45098backend.dto.LayerDTO;
 import pl.edu.zut.gk45098backend.model.Feature;
 import pl.edu.zut.gk45098backend.model.Layer;
+import pl.edu.zut.gk45098backend.projection.LayerInListReadModel;
+import pl.edu.zut.gk45098backend.projection.LayerReadModel;
+import pl.edu.zut.gk45098backend.projection.LayerWriteModel;
+import pl.edu.zut.gk45098backend.repository.FeatureRepository;
 import pl.edu.zut.gk45098backend.repository.LayerRepository;
-import java.util.Set;
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LayerService {
 
-    private LayerRepository layerRepository;
-    private GeojsonTransformer geojsonTransformer;
+    private final LayerRepository layerRepository;
+    private final FeatureRepository featureRepository;
 
-    public LayerService(LayerRepository layerRepository, GeojsonTransformer geojsonTransformer) {
+    public LayerService(LayerRepository layerRepository, FeatureRepository featureRepository) {
         this.layerRepository = layerRepository;
-        this.geojsonTransformer = geojsonTransformer;
+        this.featureRepository = featureRepository;
     }
 
-    public void addLayer(LayerDTO layerDTO) {
-        Layer layer = new Layer();
-        layer.setName(layerDTO.getName());
-        layer.setType(layerDTO.getType());
-
-        Set<Feature> features = geojsonTransformer.transformFromGeojsonFeatureCollection(layerDTO.getData());
-        for(Feature feature : features){
-            feature.setLayer(layer);
-            layer.addFeature(feature);
-        }
+    public void addLayer(LayerWriteModel layerWriteModel) {
+        Layer layer = layerWriteModel.toLayer();
 
         layerRepository.save(layer);
     }
 
-    public LayerDTO getLayerByName(String name) {
-        Layer layer = this.layerRepository.findFirstByName(name);
-        LayerDTO layerDTO = new LayerDTO();
-        layerDTO.setName(layer.getName());
-        layerDTO.setType(layer.getType());
-        layerDTO.setData(this.geojsonTransformer.transformToGeojsonFeatureCollection(layer.getFeatures()));
-        return  layerDTO;
+    public LayerReadModel getLayer(Long id) {
+        Layer layer = layerRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
+        LayerReadModel layerReadModel = new LayerReadModel(layer);
+
+        return layerReadModel;
     }
 
+    public List<LayerInListReadModel> getLayers() {
+        return layerRepository.findAll().stream()
+                .map(LayerInListReadModel::new)
+                .collect(Collectors.toList());
+    }
+
+    public void editLayer(LayerWriteModel layerWriteModel, Long id) {
+        Layer layer = layerRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        for(Feature feature : layer.getFeatures()) {
+            layer.removeFeature(feature);
+            featureRepository.delete(feature);
+        }
+        layerWriteModel.updateLayer(layer);
+        layerRepository.save(layer);
+    }
+
+    public void deleteLayer(Long id) {
+        Layer layer = layerRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        layerRepository.delete(layer);
+    }
 }
