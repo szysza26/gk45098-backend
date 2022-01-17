@@ -1,9 +1,7 @@
 package pl.edu.zut.gk45098backend.projection;
 
-import org.springframework.stereotype.Component;
 import pl.edu.zut.gk45098backend.model.Layer;
 
-@Component
 public class LayerInListReadModel {
 
     private Long id;

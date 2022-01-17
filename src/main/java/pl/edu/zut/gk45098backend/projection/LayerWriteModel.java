@@ -43,13 +43,7 @@ public class LayerWriteModel {
 
     public Layer toLayer() {
         Layer layer = new Layer();
-        layer.setName(name);
-        layer.setType(type);
-        Set<Feature> features = transformFromGeojsonFeatureCollection(data);
-        for(Feature feature : features){
-            feature.setLayer(layer);
-            layer.addFeature(feature);
-        }
+        updateLayer(layer);
         return layer;
     }
 

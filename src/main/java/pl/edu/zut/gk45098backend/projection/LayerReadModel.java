@@ -1,16 +1,13 @@
 package pl.edu.zut.gk45098backend.projection;
 
-import org.springframework.stereotype.Component;
 import org.wololo.geojson.FeatureCollection;
 import org.wololo.geojson.Geometry;
 import org.wololo.jts2geojson.GeoJSONWriter;
 import pl.edu.zut.gk45098backend.model.Feature;
 import pl.edu.zut.gk45098backend.model.Layer;
-
 import java.util.Map;
 import java.util.Set;
 
-@Component
 public class LayerReadModel {
 
     private Long id;
