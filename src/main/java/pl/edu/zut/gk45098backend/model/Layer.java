@@ -12,7 +12,7 @@ public class Layer {
     private Long id;
     private String name;
     private String type;
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL)
     private Set<ProjectLayer> projectlayers;
 
     @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL)

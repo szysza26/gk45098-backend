@@ -6,7 +6,8 @@ public class ProjectLayerReadModel {
     private Long id;
     private String nameInLegend;
     private Integer zIndex;
-    private StyleReadModel styleReadModel;
+    private StyleReadModel style;
+    private Long projectId;
     private Long layerId;
 
     public ProjectLayerReadModel() { }
@@ -15,7 +16,8 @@ public class ProjectLayerReadModel {
         id = projectLayer.getId();
         nameInLegend = projectLayer.getNameInLegend();
         zIndex = projectLayer.getzIndex();
-        styleReadModel = new StyleReadModel(projectLayer.getStyle());
+        style = new StyleReadModel(projectLayer.getStyle());
+        projectId = projectLayer.getProject().getId();
         layerId = projectLayer.getLayer().getId();
     }
 
@@ -43,12 +45,20 @@ public class ProjectLayerReadModel {
         this.zIndex = zIndex;
     }
 
-    public StyleReadModel getStyleReadModel() {
-        return styleReadModel;
+    public StyleReadModel getStyle() {
+        return style;
     }
 
-    public void setStyleReadModel(StyleReadModel styleReadModel) {
-        this.styleReadModel = styleReadModel;
+    public void setStyle(StyleReadModel style) {
+        this.style = style;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
     public Long getLayerId() {

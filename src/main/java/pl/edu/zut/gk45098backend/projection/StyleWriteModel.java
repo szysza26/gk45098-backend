@@ -70,8 +70,8 @@ public class StyleWriteModel {
         style.setPointColor(pointColor);
         style.setStrokeColor(strokeColor);
         style.setFillColor(fillColor);
-        setPointSize(pointSize);
-        setStrokeWidth(strokeWidth);
-        setStrokeStyle(strokeStyle);
+        style.setPointSize(pointSize);
+        style.setStrokeWidth(strokeWidth);
+        style.setStrokeStyle(strokeStyle);
     }
 }
