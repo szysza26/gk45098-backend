@@ -1,4 +1,4 @@
-package pl.edu.zut.gk45098backend.security.dto;
+package pl.edu.zut.gk45098backend.projection.security;
 
 public class Login {
     private String username;
