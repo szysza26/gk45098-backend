@@ -14,9 +14,11 @@ public class Layer {
     private String type;
     @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL)
     private Set<ProjectLayer> projectlayers;
-
     @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL)
     private Set<Feature> features;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Layer() {
         this.features = new HashSet<Feature>();
@@ -69,5 +71,13 @@ public class Layer {
 
     public void removeProjectLayer(ProjectLayer projectLayer){
         this.projectlayers.remove(projectLayer);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -21,6 +21,9 @@ public class Project {
     private BigDecimal zoom;
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set<ProjectLayer> projectlayers;
+    @ManyToOne()
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Project() {
         this.projectlayers = new HashSet<ProjectLayer>();
@@ -84,5 +87,13 @@ public class Project {
 
     public void removeProjectLayer(ProjectLayer projectLayer){
         this.projectlayers.remove(projectLayer);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

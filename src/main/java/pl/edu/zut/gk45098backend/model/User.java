@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -17,8 +19,15 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String role;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Project> projects;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Layer> layers;
 
-    public User() { }
+    public User() {
+        projects = new HashSet<>();
+        layers = new HashSet<>();
+    }
 
     public Long getId() {
         return id;
@@ -50,6 +59,30 @@ public class User implements UserDetails {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void addProject(Project project) {
+        projects.add(project);
+    }
+
+    public void removeProject(Project project) {
+        projects.remove(project);
+    }
+
+    public Set<Layer> getLayers() {
+        return layers;
+    }
+
+    public void addLayer(Layer layer) {
+        layers.add(layer);
+    }
+
+    public void removeLayer(Layer layer) {
+        layers.remove(layer);
     }
 
     @Override
