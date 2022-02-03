@@ -29,11 +29,6 @@ public class ProjectLayerController {
         return new ResponseEntity<>(projectLayerService.getProjectLayer(id), HttpStatus.OK);
     }
 
-    @GetMapping("/projectlayers")
-    public ResponseEntity<List<ProjectLayerReadModel>> index() {
-        return new ResponseEntity<>(projectLayerService.getProjectLayers(), HttpStatus.OK);
-    }
-
     @PutMapping("/projectlayers/{id}")
     public ResponseEntity<String> update(@RequestBody ProjectLayerWriteModel projectLayerWriteModel, @PathVariable Long id) {
         projectLayerService.editProjectLayer(projectLayerWriteModel, id);
