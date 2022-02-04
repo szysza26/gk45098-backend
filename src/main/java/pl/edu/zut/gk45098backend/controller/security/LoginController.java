@@ -21,6 +21,8 @@ public class LoginController {
 
     @Value("${jwt.secret}")
     private String secret;
+    @Value("${jwt.exp}")
+    private Long exp;
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder passwordEncoder;
 
@@ -39,7 +41,7 @@ public class LoginController {
 
         String token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 31536000000L))
+                .withExpiresAt(new Date(System.currentTimeMillis() + exp))
                 .withClaim("role", user.getRole())
                 .sign(Algorithm.HMAC256(secret));
 
