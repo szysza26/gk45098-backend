@@ -12,6 +12,7 @@ import pl.edu.zut.gk45098backend.repository.LayerRepository;
 import pl.edu.zut.gk45098backend.security.AuthenticationFacade;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,12 +20,10 @@ import java.util.stream.Collectors;
 public class LayerService {
 
     private final LayerRepository layerRepository;
-    private final FeatureRepository featureRepository;
     private final AuthenticationFacade authenticationFacade;
 
-    public LayerService(LayerRepository layerRepository, FeatureRepository featureRepository, AuthenticationFacade authenticationFacade) {
+    public LayerService(LayerRepository layerRepository, AuthenticationFacade authenticationFacade) {
         this.layerRepository = layerRepository;
-        this.featureRepository = featureRepository;
         this.authenticationFacade = authenticationFacade;
     }
 
@@ -52,10 +51,7 @@ public class LayerService {
     public void editLayer(LayerWriteModel layerWriteModel, Long id) {
         User user = authenticationFacade.getUser();
         Layer layer = layerRepository.findByIdAndUser(id, user).orElseThrow(EntityNotFoundException::new);
-        for(Feature feature : layer.getFeatures()) {
-            layer.removeFeature(feature);
-            featureRepository.delete(feature);
-        }
+        layer.clearProjectLayer();
         layerWriteModel.updateLayer(layer);
         layerRepository.save(layer);
     }

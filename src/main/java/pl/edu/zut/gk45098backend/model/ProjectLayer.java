@@ -13,7 +13,7 @@ public class ProjectLayer {
     @ManyToOne
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "style_id", nullable = false)
     private Style style;
     @ManyToOne

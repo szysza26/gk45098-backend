@@ -12,9 +12,9 @@ public class Layer {
     private Long id;
     private String name;
     private String type;
-    @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProjectLayer> projectlayers;
-    @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Feature> features;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -71,6 +71,10 @@ public class Layer {
 
     public void removeProjectLayer(ProjectLayer projectLayer){
         this.projectlayers.remove(projectLayer);
+    }
+
+    public void clearProjectLayer() {
+        this.features.clear();
     }
 
     public User getUser() {
