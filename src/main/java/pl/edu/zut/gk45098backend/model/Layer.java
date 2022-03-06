@@ -16,12 +16,15 @@ public class Layer {
     private Set<ProjectLayer> projectlayers;
     @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Feature> features;
+    @OneToMany(mappedBy = "layer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Attribute> attributes;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public Layer() {
         this.features = new HashSet<Feature>();
+        this.attributes = new HashSet<Attribute>();
         this.projectlayers = new HashSet<ProjectLayer>();
     }
 
@@ -59,6 +62,18 @@ public class Layer {
 
     public void removeFeature(Feature feature){
         this.features.remove(feature);
+    }
+
+    public Set<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void addAttribute(Attribute attribute){
+        this.attributes.add(attribute);
+    }
+
+    public void removeAttribute(Attribute attribute){
+        this.attributes.remove(attribute);
     }
 
     public Set<ProjectLayer> getProjectlayers() {

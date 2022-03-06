@@ -8,7 +8,6 @@ public class StyleWriteModel {
     private String fillColor;
     private Float pointSize;
     private Float strokeWidth;
-    private String strokeStyle;
 
     public StyleWriteModel() { }
 
@@ -52,14 +51,6 @@ public class StyleWriteModel {
         this.strokeWidth = strokeWidth;
     }
 
-    public String getStrokeStyle() {
-        return strokeStyle;
-    }
-
-    public void setStrokeStyle(String strokeStyle) {
-        this.strokeStyle = strokeStyle;
-    }
-
     public Style toStyle() {
         Style style = new Style();
         updateStyle(style);
@@ -72,6 +63,5 @@ public class StyleWriteModel {
         style.setFillColor(fillColor);
         style.setPointSize(pointSize);
         style.setStrokeWidth(strokeWidth);
-        style.setStrokeStyle(strokeStyle);
     }
 }

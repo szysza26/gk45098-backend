@@ -2,10 +2,12 @@ package pl.edu.zut.gk45098backend.projection;
 
 import org.wololo.geojson.FeatureCollection;
 import org.wololo.jts2geojson.GeoJSONReader;
+import pl.edu.zut.gk45098backend.model.Attribute;
 import pl.edu.zut.gk45098backend.model.Feature;
 import pl.edu.zut.gk45098backend.model.Layer;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -14,6 +16,7 @@ public class LayerWriteModel {
     private String name;
     private String type;
     private FeatureCollection data;
+    private Set<AttributeWriteModel> attributes = new HashSet<>();
 
     public LayerWriteModel() { }
 
@@ -55,6 +58,11 @@ public class LayerWriteModel {
             feature.setLayer(layer);
             layer.addFeature(feature);
         }
+        for(AttributeWriteModel attributeWriteModel : attributes){
+            Attribute attribute = attributeWriteModel.toAttribute();
+            attribute.setLayer(layer);
+            layer.addAttribute(attribute);
+        }
     }
 
     protected Set<Feature> transformFromGeojsonFeatureCollection(FeatureCollection featureCollection) {
@@ -70,5 +78,13 @@ public class LayerWriteModel {
         feature.setProperties(geojsonFeature.getProperties());
 
         return feature;
+    }
+
+    public Set<AttributeWriteModel> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Set<AttributeWriteModel> attributes) {
+        this.attributes = attributes;
     }
 }

@@ -9,7 +9,6 @@ public class StyleReadModel {
     private String fillColor;
     private Float pointSize;
     private Float strokeWidth;
-    private String strokeStyle;
 
     public StyleReadModel() { }
 
@@ -20,7 +19,6 @@ public class StyleReadModel {
         fillColor = style.getFillColor();
         pointSize = style.getPointSize();
         strokeWidth = style.getStrokeWidth();
-        strokeStyle = style.getStrokeStyle();
     }
 
     public Long getId() {
@@ -69,13 +67,5 @@ public class StyleReadModel {
 
     public void setStrokeWidth(Float strokeWidth) {
         this.strokeWidth = strokeWidth;
-    }
-
-    public String getStrokeStyle() {
-        return strokeStyle;
-    }
-
-    public void setStrokeStyle(String strokeStyle) {
-        this.strokeStyle = strokeStyle;
     }
 }

@@ -7,6 +7,7 @@ import pl.edu.zut.gk45098backend.model.Feature;
 import pl.edu.zut.gk45098backend.model.Layer;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LayerReadModel {
 
@@ -14,6 +15,7 @@ public class LayerReadModel {
     private String name;
     private String type;
     private FeatureCollection data;
+    private Set<AttributeReadModel> attributes;
 
     public LayerReadModel() { }
 
@@ -22,6 +24,9 @@ public class LayerReadModel {
         name = layer.getName();
         type = layer.getType();
         data = transformToGeojsonFeatureCollection(layer.getFeatures());
+        attributes = layer.getAttributes().stream()
+                .map(AttributeReadModel::new)
+                .collect(Collectors.toSet());
     }
 
     public Long getId() {
@@ -70,5 +75,13 @@ public class LayerReadModel {
         Geometry geometry = new GeoJSONWriter().write(feature.getGeometry());
         Map<String, Object> properties = feature.getProperties();
         return new org.wololo.geojson.Feature(feature.getId(), geometry, properties);
+    }
+
+    public Set<AttributeReadModel> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Set<AttributeReadModel> attributes) {
+        this.attributes = attributes;
     }
 }
