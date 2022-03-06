@@ -64,6 +64,10 @@ public class Layer {
         this.features.remove(feature);
     }
 
+    public void clearFeatures() {
+        this.features.clear();
+    }
+
     public Set<Attribute> getAttributes() {
         return attributes;
     }
@@ -76,6 +80,10 @@ public class Layer {
         this.attributes.remove(attribute);
     }
 
+    public void clearAttributes() {
+        this.attributes.clear();
+    }
+
     public Set<ProjectLayer> getProjectlayers() {
         return projectlayers;
     }
@@ -86,10 +94,6 @@ public class Layer {
 
     public void removeProjectLayer(ProjectLayer projectLayer){
         this.projectlayers.remove(projectLayer);
-    }
-
-    public void clearProjectLayer() {
-        this.features.clear();
     }
 
     public User getUser() {

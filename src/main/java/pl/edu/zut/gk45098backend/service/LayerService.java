@@ -51,7 +51,8 @@ public class LayerService {
     public void editLayer(LayerWriteModel layerWriteModel, Long id) {
         User user = authenticationFacade.getUser();
         Layer layer = layerRepository.findByIdAndUser(id, user).orElseThrow(EntityNotFoundException::new);
-        layer.clearProjectLayer();
+        layer.clearFeatures();
+        layer.clearAttributes();
         layerWriteModel.updateLayer(layer);
         layerRepository.save(layer);
     }
