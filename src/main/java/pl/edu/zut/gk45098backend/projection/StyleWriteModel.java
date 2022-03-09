@@ -2,11 +2,30 @@ package pl.edu.zut.gk45098backend.projection;
 
 import pl.edu.zut.gk45098backend.model.Style;
 
+import javax.validation.constraints.*;
+
 public class StyleWriteModel {
+
+    @NotEmpty
+    @Size(min = 3, max = 30)
     private String pointColor;
+
+    @NotEmpty
+    @Size(min = 3, max = 30)
     private String strokeColor;
+
+    @NotEmpty
+    @Size(min = 3, max = 30)
     private String fillColor;
+
+    @NotNull
+    @DecimalMin(value = "0.1")
+    @DecimalMax(value = "100")
     private Float pointSize;
+
+    @NotNull
+    @DecimalMin(value = "0.1")
+    @DecimalMax(value = "100")
     private Float strokeWidth;
 
     public StyleWriteModel() { }

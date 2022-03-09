@@ -7,6 +7,8 @@ import pl.edu.zut.gk45098backend.projection.ProjectInListReadModel;
 import pl.edu.zut.gk45098backend.projection.ProjectReadModel;
 import pl.edu.zut.gk45098backend.projection.ProjectWriteModel;
 import pl.edu.zut.gk45098backend.service.ProjectService;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -20,7 +22,7 @@ public class ProjectController {
     }
 
     @PostMapping("/projects")
-    public ResponseEntity<String> create(@RequestBody ProjectWriteModel projectWriteModel) {
+    public ResponseEntity<String> create(@Valid @RequestBody ProjectWriteModel projectWriteModel) {
         projectService.addProject(projectWriteModel);
         return new ResponseEntity<>("created", HttpStatus.CREATED);
     }
@@ -36,7 +38,7 @@ public class ProjectController {
     }
 
     @PutMapping("/projects/{id}")
-    public ResponseEntity<String> update(@RequestBody ProjectWriteModel projectWriteModel, @PathVariable Long id) {
+    public ResponseEntity<String> update(@Valid @RequestBody ProjectWriteModel projectWriteModel, @PathVariable Long id) {
         projectService.editProject(projectWriteModel, id);
         return new ResponseEntity<>("updated", HttpStatus.OK);
     }

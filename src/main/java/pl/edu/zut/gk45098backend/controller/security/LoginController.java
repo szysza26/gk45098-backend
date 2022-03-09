@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.edu.zut.gk45098backend.model.User;
 import pl.edu.zut.gk45098backend.projection.security.Login;
 import pl.edu.zut.gk45098backend.projection.security.Token;
-
+import javax.validation.Valid;
 import java.util.Date;
 
 @RestController
@@ -32,7 +32,7 @@ public class LoginController {
     }
 
     @PostMapping("/api/login")
-    public ResponseEntity<Token> create(@RequestBody Login login) {
+    public ResponseEntity<Token> create(@Valid @RequestBody Login login) {
         User user = (User)userDetailsService.loadUserByUsername(login.getUsername());
 
         if(!passwordEncoder.matches(login.getPassword(), user.getPassword())){

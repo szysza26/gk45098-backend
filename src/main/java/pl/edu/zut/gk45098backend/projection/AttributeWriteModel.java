@@ -2,8 +2,17 @@ package pl.edu.zut.gk45098backend.projection;
 
 import pl.edu.zut.gk45098backend.model.Attribute;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class AttributeWriteModel {
+
+    @NotEmpty
+    @Size(min = 1, max = 255)
     private String name;
+
+    @NotEmpty
+    @Size(min = 1, max = 255)
     private String type;
 
     public AttributeWriteModel() { }

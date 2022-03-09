@@ -2,11 +2,26 @@ package pl.edu.zut.gk45098backend.projection;
 
 import pl.edu.zut.gk45098backend.model.ProjectLayer;
 
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+
 public class ProjectLayerWriteModel {
+
+    @NotEmpty
+    @Size(min = 1, max = 255)
     private String nameInLegend;
+
+    @NotNull
+    @Min(value = 0)
     private Integer zIndex;
+
+    @Valid
     private StyleWriteModel style;
+
+    @NotNull
     private Long projectId;
+
+    @NotNull
     private Long layerId;
 
     public ProjectLayerWriteModel() { }

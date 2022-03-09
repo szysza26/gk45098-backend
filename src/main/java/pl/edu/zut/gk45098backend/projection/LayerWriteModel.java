@@ -6,6 +6,9 @@ import pl.edu.zut.gk45098backend.model.Attribute;
 import pl.edu.zut.gk45098backend.model.Feature;
 import pl.edu.zut.gk45098backend.model.Layer;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,9 +16,18 @@ import java.util.stream.Collectors;
 
 public class LayerWriteModel {
 
+    @NotEmpty
+    @Size(min = 1, max = 255)
     private String name;
+
+    @NotEmpty
+    @Size(min = 1, max = 255)
     private String type;
+
+    @Valid
     private FeatureCollection data;
+
+    @Valid
     private Set<AttributeWriteModel> attributes = new HashSet<>();
 
     public LayerWriteModel() { }

@@ -7,7 +7,7 @@ import pl.edu.zut.gk45098backend.projection.LayerInListReadModel;
 import pl.edu.zut.gk45098backend.projection.LayerReadModel;
 import pl.edu.zut.gk45098backend.projection.LayerWriteModel;
 import pl.edu.zut.gk45098backend.service.LayerService;
-
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -21,7 +21,7 @@ public class LayerController {
     }
 
     @PostMapping("/layers")
-    public ResponseEntity<String> addLayer(@RequestBody LayerWriteModel layerWriteModel) {
+    public ResponseEntity<String> addLayer(@Valid @RequestBody LayerWriteModel layerWriteModel) {
         layerService.addLayer(layerWriteModel);
         return new ResponseEntity<>("created", HttpStatus.CREATED);
     }
@@ -39,7 +39,7 @@ public class LayerController {
     }
 
     @PutMapping("/layers/{id}")
-    public ResponseEntity<String> editLayer(@RequestBody LayerWriteModel layerWriteModel, @PathVariable Long id) {
+    public ResponseEntity<String> editLayer(@Valid @RequestBody LayerWriteModel layerWriteModel, @PathVariable Long id) {
         layerService.editLayer(layerWriteModel, id);
         return new ResponseEntity<>("updated", HttpStatus.OK);
     }

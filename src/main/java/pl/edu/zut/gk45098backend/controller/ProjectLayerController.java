@@ -5,8 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.zut.gk45098backend.projection.*;
 import pl.edu.zut.gk45098backend.service.ProjectLayerService;
-
-import java.util.List;
+import javax.validation.Valid;
 
 @RequestMapping("/api")
 @RestController
@@ -19,7 +18,7 @@ public class ProjectLayerController {
     }
 
     @PostMapping("/projectlayers")
-    public ResponseEntity<String> create(@RequestBody ProjectLayerWriteModel projectLayerWriteModel) {
+    public ResponseEntity<String> create(@Valid @RequestBody ProjectLayerWriteModel projectLayerWriteModel) {
         projectLayerService.addProjectLayer(projectLayerWriteModel);
         return new ResponseEntity<>("created", HttpStatus.CREATED);
     }
@@ -30,7 +29,7 @@ public class ProjectLayerController {
     }
 
     @PutMapping("/projectlayers/{id}")
-    public ResponseEntity<String> update(@RequestBody ProjectLayerWriteModel projectLayerWriteModel, @PathVariable Long id) {
+    public ResponseEntity<String> update(@Valid @RequestBody ProjectLayerWriteModel projectLayerWriteModel, @PathVariable Long id) {
         projectLayerService.editProjectLayer(projectLayerWriteModel, id);
         return new ResponseEntity<>("updated", HttpStatus.OK);
     }
