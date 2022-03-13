@@ -23,8 +23,18 @@ public class UserService {
             throw new EntityNotFoundException();
         }
         Jwt principal = ((Jwt) authentication.getPrincipal());
+        if(!principal.hasClaim("email")){
+            throw new EntityNotFoundException();
+        }
         String email = principal.getClaimAsString("email");
-        return userRepository.getUserByEmail(email).orElseThrow(EntityNotFoundException::new);
+        return userRepository.getUserByEmail(email).orElseGet(() -> newUser(email));
+    }
+
+    private User newUser(String email) {
+        User user = new User();
+        user.setEmail(email);
+        userRepository.save(user);
+        return user;
     }
 
 }
