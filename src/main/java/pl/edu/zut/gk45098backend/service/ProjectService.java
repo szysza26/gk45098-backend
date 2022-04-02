@@ -7,7 +7,6 @@ import pl.edu.zut.gk45098backend.projection.ProjectInListReadModel;
 import pl.edu.zut.gk45098backend.projection.ProjectReadModel;
 import pl.edu.zut.gk45098backend.projection.ProjectWriteModel;
 import pl.edu.zut.gk45098backend.repository.ProjectRepository;
-import pl.edu.zut.gk45098backend.repository.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
