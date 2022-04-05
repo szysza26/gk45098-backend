@@ -11,7 +11,6 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -56,10 +55,10 @@ class ProjectServiceTest {
         when(projectRepository.findByIdAndUser(any(Long.class), any(User.class))).thenReturn(projectOptional);
 
         // when
-        ProjectReadModel project = projectService.getProject(1L);
+        ProjectReadModel projectReadModel = projectService.getProject(1L);
 
         // then
-        assertThat(project).isNotNull();
+        assertThat(projectReadModel).isNotNull();
     }
 
     @Test
