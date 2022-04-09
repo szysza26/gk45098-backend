@@ -10,7 +10,6 @@ import pl.edu.zut.gk45098backend.projection.ProjectLayerWriteModel;
 import pl.edu.zut.gk45098backend.repository.LayerRepository;
 import pl.edu.zut.gk45098backend.repository.ProjectLayerRepository;
 import pl.edu.zut.gk45098backend.repository.ProjectRepository;
-import pl.edu.zut.gk45098backend.repository.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -43,15 +42,13 @@ public class ProjectLayerService {
 
     public ProjectLayerReadModel getProjectLayer(Long id) {
         User user = userService.getCurrentUser();
-        ProjectLayer projectLayer = projectLayerRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        if(!projectLayer.getProject().getUser().getId().equals(user.getId()) || !projectLayer.getLayer().getUser().getId().equals(user.getId())) throw new EntityNotFoundException();
+        ProjectLayer projectLayer = projectLayerRepository.findByIdAndProject_User(id, user).orElseThrow(EntityNotFoundException::new);
         return new ProjectLayerReadModel(projectLayer);
     }
 
     public void editProjectLayer(ProjectLayerWriteModel projectLayerWriteModel, Long id) {
         User user = userService.getCurrentUser();
-        ProjectLayer projectLayer = projectLayerRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        if(!projectLayer.getProject().getUser().getId().equals(user.getId()) || !projectLayer.getLayer().getUser().getId().equals(user.getId())) throw new EntityNotFoundException();
+        ProjectLayer projectLayer = projectLayerRepository.findByIdAndProject_User(id, user).orElseThrow(EntityNotFoundException::new);
         Project project = projectRepository.findByIdAndUser(projectLayerWriteModel.getProjectId(), user).orElseThrow(EntityNotFoundException::new);
         Layer layer = layerRepository.findByIdAndUser(projectLayerWriteModel.getLayerId(), user).orElseThrow(EntityNotFoundException::new);
 
@@ -64,8 +61,7 @@ public class ProjectLayerService {
 
     public void deleteProjectLayer(Long id) {
         User user = userService.getCurrentUser();
-        ProjectLayer projectLayer = projectLayerRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        if(!projectLayer.getProject().getUser().getId().equals(user.getId()) || !projectLayer.getLayer().getUser().getId().equals(user.getId())) throw new EntityNotFoundException();
+        ProjectLayer projectLayer = projectLayerRepository.findByIdAndProject_User(id, user).orElseThrow(EntityNotFoundException::new);
         projectLayerRepository.delete(projectLayer);
     }
 
