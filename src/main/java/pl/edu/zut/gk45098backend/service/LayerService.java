@@ -7,7 +7,6 @@ import pl.edu.zut.gk45098backend.projection.LayerInListReadModel;
 import pl.edu.zut.gk45098backend.projection.LayerReadModel;
 import pl.edu.zut.gk45098backend.projection.LayerWriteModel;
 import pl.edu.zut.gk45098backend.repository.LayerRepository;
-import pl.edu.zut.gk45098backend.repository.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
